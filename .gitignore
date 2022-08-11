@@ -1,129 +1,48 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+import pygame
+pygame.init()
 
-# C extensions
-*.so
+player = pygame.image.load(r"spidey.png")
+x = y = 0
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+player = pygame.transform.scale(player, (100,100))
+screen = pygame.display.set_mode((600, 400))
+running = True
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+fpsClock = pygame.time.Clock()
+fps = 60
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
+        if event.type in [pygame.KEYDOWN, pygame.KEYUP]:
+            print(event.key, event.type)
 
-# Translations
-*.mo
-*.pot
+    keys=pygame.key.get_pressed()
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+  
+    
+    if keys[pygame.K_w]:
+        y = y - 5
+    if keys[pygame.K_a]:
+        x = x - 5
+    if keys[pygame.K_s]:
+        y = y + 5
+    if keys[pygame.K_d]:
+        x = x + 5  
 
-# Flask stuff:
-instance/
-.webassets-cache
 
-# Scrapy stuff:
-.scrapy
 
-# Sphinx documentation
-docs/_build/
+    if x > 500: x = - 500
+    if x < 0: x = 0
+    if y < 0: y = 0
+    if y > 320: y = - 320
 
-# PyBuilder
-target/
+    screen.fill((255, 255, 255))
+    screen.blit(player, (x, y))
 
-# Jupyter Notebook
-.ipynb_checkpoints
+    pygame.display.flip()
+    fpsClock.tick(fps)
 
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
+pygame.quit()
